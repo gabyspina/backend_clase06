@@ -31,26 +31,28 @@ const productos = [
 const app = express();
 
 const nombres = productos.map((item) => item.title);
-console.log(nombres);
+
+const all = contenedor.getAll().then((result) => console.log('result', result));
+
+app.get('/', (request, response) => {
+	response.send(all);
+});
 
 getRandom = (nombres) => {
 	return nombres[Math.floor(Math.random() * nombres.length)];
 };
-console.log(getRandom(productos));
-
-let index = getRandom(0, productos.length - 1);
 
 const server = app.listen(8080, () => console.log('Server Up'));
 server.on('error', (error) => console.log(`Error en servidor ${error}`));
 
-app.get('/', (request, response) => {
-	response.send('<h1 style= "color:blue" >Lista de productos</h1>');
-});
-
 app.get('/productos', (request, response) => {
-	response.send(`Los productos son ${nombres}`);
+	response.send(`<h1  style= 'color:red'> Los productos son: ${nombres}</h1> `);
 });
 
 app.get('/productoRandom', (request, response) => {
-	response.send(`Los productos son ${getRandom(nombres)}`);
+	response.send(
+		`<h1 style= 'color:blue' >El pruducto al azar es : ${getRandom(
+			nombres
+		)}</h1>`
+	);
 });
