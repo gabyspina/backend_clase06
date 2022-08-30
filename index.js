@@ -32,10 +32,8 @@ const app = express();
 
 const nombres = productos.map((item) => item.title);
 
-const all = contenedor.getAll().then((result) => console.log('result', result));
-
 app.get('/', (request, response) => {
-	response.send(all);
+	contenedor.getAll().then((result) => response.send(result));
 });
 
 getRandom = (nombres) => {
